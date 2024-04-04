@@ -17,6 +17,7 @@ public class OrderQueue {
 
     public void makeOrder(String name, String date, int quantity) {
         q.enqueue(new CustomerOrder(name, date, quantity));
+        ++size;
     }
 
     public void addStock(int amount) {
@@ -27,7 +28,11 @@ public class OrderQueue {
         q.getHead().getValue().shipProduct();
         --stock;
 
-        if (q.getHead().getValue().getQuantity() == 0) q.dequeue(); 
+        if (q.getHead().getValue().getQuantity() == 0) { 
+            q.dequeue();
+            --size;
+        }
+
     }
 
     public void sellStock() {
@@ -36,5 +41,9 @@ public class OrderQueue {
 
     public String toString() {
         return "" + q.getHead().getValue().getQuantity();
+    }
+
+    public int getSize() {
+        return size;
     }
 }
